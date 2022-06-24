@@ -11,7 +11,7 @@ function buildMetadata(sample) {
       });
     });
   }
-//Creating horizontal bar chart   
+//Creating Horizontal Bar Chart: Storing OTU's Found in Individual   
   function createBar(sample) {
   // Using `d3.json`
   d3.json("samples.json").then((data) => {
@@ -23,7 +23,30 @@ function buildMetadata(sample) {
     var ids = result.otu_ids;
     var labels = result.otu_labels;
     var values = result.sample_values;
-//Creating a Bubble Chart That Displays Each Sample 
+
+// Creating Washing Gauge Basic Gauge: Belly Button Washing Frequency
+    var metadata= data.metadata;
+    console.log(metadata)
+    var metaarray= metadata.filter(sampleobject => 
+      sampleobject.id == sample);
+    var metaresult= metaarray[0];
+    var frequency = metaresult.wfreq;
+    console.log(frequency)
+
+    var gaugedata = [
+      {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: frequency,
+        title: { text: "Belly Button Washing Frequency <br> Scrubs per Week " },
+        type: "indicator",
+        mode: "gauge+number"
+    }
+    ];
+    
+    var gaugelayout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+    Plotly.newPlot('gauge', gaugedata, gaugelayout);
+    
+//Creating the Bubble chart: OTU ID with Clickable Bubbles  
     var BubbleChart = {
       xaxis: { title: "OTU ID" },
       hovermode: "closest",
@@ -38,6 +61,7 @@ function buildMetadata(sample) {
         marker: {
           color: ids,
           size: values,
+          colorscale: "Earth"
           }
       }
     ];
@@ -63,10 +87,10 @@ function buildMetadata(sample) {
   }
 
   function init() {
-  // Selecting specific element from drop down menu
+  // Drop down menu to select a specific element
   var selector = d3.select("#selDataset");
   
-  // create select list
+  // Creating our selection list
   d3.json("samples.json").then((data) => {
     console.log("The Init() function ran");
     var sampleNames = data.names;
