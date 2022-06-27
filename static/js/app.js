@@ -39,13 +39,30 @@ function buildMetadata(sample) {
         value: frequency,
         title: { text: "Belly Button Washing Frequency <br> Scrubs per Week " },
         type: "indicator",
-        mode: "gauge+number"
+        mode: "gauge+number",
+        colorscale: "Earth",
+        gauge: {
+          axis: { range: [0, 10] },
+          steps: [
+            { range: [0, 1], color: "tan" },
+            { range: [1, 2], color: "burlywood" },
+            { range: [2, 3], color: "palegoldenrod" },
+            { range: [3, 4], color: "lemonchiffon" },
+            { range: [4, 5], color: "lightyellow" },
+            { range: [5, 6], color: "lightgreen" },
+            { range: [6, 7], color: "mediumspringgreen" },
+            { range: [7, 8], color: "turquoise" },
+            { range: [8, 9], color: "lightseagreen" },
+            { range: [9, 10], color: "deepskyblue" },
+          ]
+                  }
     }
     ];
-    
+
     var gaugelayout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
     Plotly.newPlot('gauge', gaugedata, gaugelayout);
     
+
 //Creating the Bubble chart: OTU ID with Clickable Bubbles  
     var BubbleChart = {
       xaxis: { title: "OTU ID" },
